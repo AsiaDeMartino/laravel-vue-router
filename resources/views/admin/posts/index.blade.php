@@ -27,10 +27,12 @@
                     <td>{{ $post->published_at }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td>
-                        <a class="btn btn-small btn-info" href="{{ route('admin.posts.edit', $post) }}">Edit</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-small btn-danger" href="{{ route('admin.posts.destroy', $post) }}">Delete</a>
+                        <a class="btn mb-3 btn-small btn-info" href="{{ route('admin.posts.edit', $post) }}">Edit</a>
+                        <form action="{{ route('admin.posts.destroy', $post) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach       
