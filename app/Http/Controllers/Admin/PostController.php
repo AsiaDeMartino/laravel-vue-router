@@ -47,17 +47,7 @@ class PostController extends Controller
 
         $data = $request->all();
 
-        $slug = Str::slug($data['title']);
-        $slug_base = $slug;
-        $counter = 1;
-
-        $post_present = Post::where('slug',$slug)->first();
-
-        while ($post_present){
-            $slug = $slug_base . '-' .$counter;
-            $counter++;
-            $post_present = Post::where('slug',$slug)->first();
-        }
+        $slug = Post::getUniqueSlug($data['title']);
 
         $post = new Post();
         $post->fill($data);
@@ -97,7 +87,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
         $request->validate([
             'title' => 'required|string|max:150',
@@ -106,8 +96,14 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
-        $post = new Post();
-        $post->fill($data);
+        
+        if($post->title != $data['title']){
+            $slug = Post::getUniqueSlug($data['title']);
+        }
+
+        $post->update($data);
+        return redirect()->route('admin.posts.index');
+
 
     }
 
