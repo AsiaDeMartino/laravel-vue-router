@@ -12,6 +12,7 @@ class Post extends Model
         'title',
         'content',
         'published_at',
+        'category_id',
         'slug'
     ];
 
@@ -33,5 +34,9 @@ class Post extends Model
 
     public function user(){
         return $this->belongsTo('App\User');
+    }
+
+    public function category(){
+        return $this->belongsTo('App\Category');
     }
 }
