@@ -24,15 +24,28 @@
         
             <div class="form-group">
               <label for="title">Title</label>
-              <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') ?: $post->title }}" id="title" >
+              <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title',$post->title) }}" id="title" >
               @error('title')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
 
             <div class="form-group">
+                <label for="category_id">Select a Category</label>
+                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+                  <option value="">-- no category --</option>
+                  @foreach ($categories as $category)
+                    <option {{ old('category_id', optional($post->category)->id) == $category->id ? 'selected' : '' }} value="{{ $category->id  }}">{{ $category->name }}</option>
+                  @endforeach
+                </select>
+                @error('category_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+
+            <div class="form-group">
               <label for="content">Insert article's content</label>
-              <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="10">{{ old('content') ?: $post->content }}</textarea>
+              <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="10">{{ old('content', $post->content) }}</textarea>
               @error('content')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
