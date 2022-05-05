@@ -32,7 +32,7 @@ class PostSeeder extends Seeder
             $post->published_at = $faker->randomElement([null, $faker->dateTime()]);
             $post->category_id = $faker->optional()->randomElement($categoriesId);
             
-            $randomTags = $faker->randomElement($tagsId, 2);
+            $randomTags = $faker->randomElements($tagsId, 2);
 
             $post->save();
 

@@ -41,7 +41,20 @@
                 @error('category_id')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-              </div>
+            </div>
+
+            <label for="tags">Select your Tags</label>
+            <div class="d-flex">
+              @foreach ($tags as $tag)
+                <div class="form-group form-check mr-4">
+                  <input type="checkbox" {{ $post->tags->contains($tag) ? 'checked' : ''}} class="form-check-input" value="{{ $tag->id }}" name="tags[]" id="tags-{{ $tag->id }}">
+                  <label class="form-check-label" for="tags-{{ $tag->name }}">{{ $tag->name }}</label>
+                </div>
+              @endforeach
+            </div>
+            @error('tags')
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
 
             <div class="form-group">
               <label for="content">Insert article's content</label>
