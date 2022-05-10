@@ -1990,6 +1990,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1997,16 +2002,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      lastPage: 0,
+      currentPage: 1
     };
   },
   methods: {
     fetchPosts: function fetchPosts() {
       var _this = this;
 
-      axios.get('/api/posts').then(function (res) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('/api/posts', {
+        params: {
+          page: page
+        }
+      }).then(function (res) {
         var posts = res.data.posts;
-        _this.posts = posts;
+        var data = posts.data,
+            last_page = posts.last_page,
+            current_page = posts.current_page;
+        _this.posts = data;
+        _this.lastPage = last_page;
+        _this.currentPage = current_page;
       })["catch"](function (err) {
         console.warn(err);
       });
@@ -3210,13 +3227,15 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "app bg-zinc-800 text-white" },
+    { staticClass: "app bg-zinc-700 text-white" },
     [
       _vm._m(0),
       _vm._v(" "),
       _c("PostGrid"),
       _vm._v(" "),
-      _c("footer", [_vm._v("\n        Boolpress© 2022 \n    ")]),
+      _c("footer", { staticClass: "ml-4" }, [
+        _vm._v("\n        Boolpress© 2022 \n    "),
+      ]),
     ],
     1
   )
@@ -3226,7 +3245,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("header", [
+    return _c("header", { staticClass: "ml-4" }, [
       _c("nav", [
         _c("ul", [
           _c("li", [_vm._v("Home")]),
@@ -3260,20 +3279,46 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "py-12" }, [
     _vm._m(0),
     _vm._v(" "),
     _c(
       "div",
       {
         staticClass:
-          "container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8",
+          "container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 py-10",
       },
       _vm._l(_vm.posts, function (post) {
         return _c("PostCard", { key: post.id, attrs: { post: post } })
       }),
       1
     ),
+    _vm._v(" "),
+    _c("div", { staticClass: "container py-4" }, [
+      _c(
+        "ul",
+        { staticClass: "pagination flex justify-center gap-4 items-center" },
+        _vm._l(_vm.lastPage, function (n) {
+          return _c(
+            "li",
+            {
+              key: n,
+              class: [
+                _vm.currentPage === n ? "bg-cyan-500" : "bg-white/30",
+                "cursor-pointer rounded-full h-10 w-10 flex items-center justify-center text-sm",
+              ],
+              on: {
+                click: function ($event) {
+                  return _vm.fetchPosts(n)
+                },
+              },
+            },
+            [_vm._v(_vm._s(n))]
+          )
+        }),
+        0
+      ),
+    ]),
   ])
 }
 var staticRenderFns = [

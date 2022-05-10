@@ -1,6 +1,6 @@
 <template>
-  <div class="app bg-zinc-800 text-white">
-      <header>
+  <div class="app bg-zinc-700 text-white">
+      <header class="ml-4">
           <nav>
               <ul>
                   <li>Home</li>
@@ -10,7 +10,7 @@
           </nav>
       </header>
       <PostGrid />
-      <footer>
+      <footer class="ml-4">
           Boolpress&copy; 2022 
       </footer>
   </div>

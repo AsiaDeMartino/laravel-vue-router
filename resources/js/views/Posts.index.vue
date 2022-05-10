@@ -1,10 +1,15 @@
 <template>
-  <div>
+  <div class="py-12">
       <div class="container">
           <h1>Ultimi Post</h1>
       </div>
-      <div class="container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div class="container grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 py-10">
           <PostCard v-for="post in posts" :key="post.id" :post="post" />
+      </div>
+      <div class="container py-4">
+          <ul class="pagination flex justify-center gap-4 items-center">
+              <li @click="fetchPosts(n)" :class="[ currentPage === n ? 'bg-cyan-500' : 'bg-white/30', 'cursor-pointer rounded-full h-10 w-10 flex items-center justify-center text-sm']" v-for="n in lastPage" :key="n">{{n}}</li>
+          </ul>
       </div>
   </div>
 </template>
@@ -19,15 +24,24 @@ export default {
     },
     data() {
         return {
-            posts: []
+            posts: [],
+            lastPage: 0,
+            currentPage: 1,
         }
     },
     methods: {
-        fetchPosts(){
-            axios.get('/api/posts')
+        fetchPosts(page = 1){
+            axios.get('/api/posts',{
+                params: {
+                    page
+                }
+            })
             .then(res => {
                 const { posts } = res.data
-                this.posts = posts
+                const { data, last_page, current_page } = posts
+                this.posts = data
+                this.lastPage = last_page
+                this.currentPage = current_page
             })
             .catch( err => {
                 console.warn(err)
