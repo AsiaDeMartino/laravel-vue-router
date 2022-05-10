@@ -15,8 +15,25 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+
+
+    <script>
+        tailwind.config = {
+        theme: {
+            extend: {
+                container: {
+                    center: true,
+                },
+            colors: {
+                clifford: '#da373d',
+            }
+            }
+      }
+    }
+    </script>
+
 </head>
 <body>
     <div id="root">
