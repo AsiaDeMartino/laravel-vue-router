@@ -1,15 +1,20 @@
 <template>
   <div class="app bg-zinc-700 text-white">
       <header class="ml-4">
-          <nav>
-              <ul>
-                  <li>Home</li>
-                  <li>Posts</li>
-                  <li>Categories</li>
+          <nav class="py-6 flex gap-4 items-center">
+              <ul class="contents">
+                  <li>
+                      <router-link :to="{name:'posts.index'}">Posts</router-link>
+                  </li>
+                  <li>
+                      <router-link :to="{name:'contact'}">Contacts</router-link>
+                  </li>
               </ul>
           </nav>
       </header>
-      <PostGrid />
+      
+    <router-view></router-view>
+
       <footer class="ml-4">
           Boolpress&copy; 2022 
       </footer>
@@ -17,7 +22,7 @@
 </template>
 
 <script>
-import PostGrid from './Posts.index.vue'
+import PostGrid from '../pages/Posts.index.vue'
 
 export default {
 
