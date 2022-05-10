@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
  import Posts from '../pages/Posts.index.vue'
  import Post from '../pages/Posts.show'
  import Contact from '../pages/Contact.vue'
+ import NotFound from '../pages/404'
 
 
 
@@ -24,6 +25,10 @@ import VueRouter from 'vue-router';
         path: '/contact',
         name: 'contact',
         component: Contact
+    },
+    {
+        path: '/*',
+        component: NotFound
     },
  ];
 
